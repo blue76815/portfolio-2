@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁 | 個人履歷網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/performance.css">
+    <style>
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #0f172a 50%, #164e63 75%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        .typing-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .glass-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(34,211,238,0.3);
+            box-shadow: 0 0 20px rgba(34,211,238,0.15);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- 導覽列 -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Portfolio</a>
+            <div class="hidden md:flex gap-6">
+                <a href="index.html" class="text-cyan-400 hover:text-cyan-300 transition">首頁</a>
+                <a href="projects.html" class="text-slate-300 hover:text-white transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-slate-300 hover:text-white transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-white text-2xl">☰</button>
+        </div>
+        <!-- 手機版選單 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-800/95 backdrop-blur-lg border-t border-white/10">
+            <div class="flex flex-col px-4 py-4 gap-3">
+                <a href="index.html" class="text-cyan-400 hover:text-cyan-300 transition">首頁</a>
+                <a href="projects.html" class="text-slate-300 hover:text-white transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-slate-300 hover:text-white transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero 區域 -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative">
+        <div class="text-center px-4">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">
+                你好，我是開發者
+            </h1>
+            <p class="text-xl md:text-2xl text-slate-300 mb-2">我是一位</p>
+            <p class="text-2xl md:text-4xl font-semibold text-cyan-400 h-12">
+                <span id="typingText"></span><span class="typing-cursor text-cyan-400">|</span>
+            </p>
+            <p class="text-slate-400 mt-6 max-w-xl mx-auto">熱愛用程式碼解決問題，打造優雅且實用的數位產品。</p>
+            <a href="projects.html" class="inline-block mt-8 px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-all duration-300 hover:scale-105">
+                查看我的作品 →
+            </a>
+        </div>
+    </section>
+
+    <!-- 精選作品區 -->
+    <section id="featuredProjects" class="py-20 px-4 max-w-6xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">精選作品</h2>
+        <p class="text-slate-400 text-center mb-12">以下是我近期完成的幾個代表作品</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectCards">
+            <p class="text-slate-500 text-center col-span-full">載入中...</p>
+        </div>
+        <div class="text-center mt-12">
+            <a href="projects.html" class="px-8 py-3 border border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 rounded-lg transition-all duration-300 hover:scale-105 inline-block">
+                查看全部作品 →
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-400 text-sm">&copy; 2026 Portfolio. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">GitHub</a>
+                <a href="https://linkedin.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        // 漢堡選單切換
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // 打字機效果
+        const titles = ['全端工程師', 'UI/UX 設計師', '問題解決者', '終身學習者'];
+        let titleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingEl = document.getElementById('typingText');
+
+        function typeWriter() {
+            const currentTitle = titles[titleIndex];
+            if (isDeleting) {
+                typingEl.textContent = currentTitle.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingEl.textContent = currentTitle.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let delay = isDeleting ? 50 : 120;
+
+            if (!isDeleting && charIndex === currentTitle.length) {
+                delay = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                titleIndex = (titleIndex + 1) % titles.length;
+                delay = 500;
+            }
+
+            setTimeout(typeWriter, delay);
+        }
+        typeWriter();
+
+        // GSAP 動畫
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero 淡入
+        gsap.from('.hero-bg .text-center > *', {
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.15,
+            ease: 'power3.out'
+        });
+
+        // Hero 視差滾動
+        gsap.to('.hero-bg', {
+            backgroundPosition: '50% 30%',
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.hero-bg',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // CTA 按鈕 hover 微放大
+        document.querySelectorAll('a[href="projects.html"]').forEach(btn => {
+            btn.addEventListener('mouseenter', () => gsap.to(btn, { scale: 1.1, duration: 0.3, ease: 'power2.out' }));
+            btn.addEventListener('mouseleave', () => gsap.to(btn, { scale: 1, duration: 0.3, ease: 'power2.out' }));
+        });
+
+        // 精選作品進場
+        gsap.from('#featuredProjects h2, #featuredProjects p', {
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '#featuredProjects',
+                start: 'top 80%',
+                toggleActions: 'play none none none'
+            }
+        });
+
+        // 從 API 載入精選作品
+        const API_BASE = 'http://localhost:8000';
+        async function loadFeaturedProjects() {
+            try {
+                const res = await fetch(`${API_BASE}/api/projects`);
+                const data = await res.json();
+                const container = document.getElementById('projectCards');
+                if (data.success && data.data.length > 0) {
+                    const featured = data.data.slice(0, 3);
+                    const icons = ['🌐', '📊', '📱', '🤖', '📝', '🎮'];
+                    container.innerHTML = featured.map((p, i) => {
+                        const techs = p.tech_stack ? p.tech_stack.split(',').map(t => t.trim()) : [];
+                        return `
+                            <article class="glass-card p-6">
+                                <div class="w-full h-40 bg-slate-700 rounded-lg mb-4 flex items-center justify-center text-slate-500">
+                                    <span class="text-4xl">${icons[i % icons.length]}</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-white mb-2">${p.title}</h3>
+                                <p class="text-slate-400 text-sm mb-3">${p.description}</p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${techs.map((t, j) => `<span class="text-xs px-2 py-1 ${j % 2 === 0 ? 'bg-cyan-400/10 text-cyan-400' : 'bg-violet-400/10 text-violet-400'} rounded">${t}</span>`).join('')}
+                                </div>
+                            </article>
+                        `;
+                    }).join('');
+
+                    gsap.from('#projectCards .glass-card', {
+                        y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out',
+                        scrollTrigger: { trigger: '#projectCards', start: 'top 80%', toggleActions: 'play none none none' }
+                    });
+                } else {
+                    container.innerHTML = '<p class="text-slate-500 text-center col-span-full">尚無作品</p>';
+                }
+            } catch (err) {
+                console.error('載入作品失敗:', err);
+            }
+        }
+        loadFeaturedProjects();
+    </script>
+</body>
+</html>

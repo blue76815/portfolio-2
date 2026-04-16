@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儀表板 | 後台管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 w-64 h-full bg-slate-800 border-r border-white/10 z-40">
+        <div class="p-6">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">後台管理</h1>
+        </div>
+        <nav class="mt-4">
+            <a href="dashboard.html" class="flex items-center px-6 py-3 text-cyan-400 border-l-4 border-cyan-400 bg-white/5">
+                <span class="mr-3">📊</span> 儀表板
+            </a>
+            <a href="projects.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">💼</span> 作品管理
+            </a>
+            <a href="messages.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">💬</span> 留言管理
+            </a>
+            <a href="profile.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">👤</span> 個人資料
+            </a>
+            <button onclick="logout()" class="flex items-center px-6 py-3 text-slate-300 hover:text-red-400 hover:bg-white/5 border-l-4 border-transparent transition w-full text-left mt-8">
+                <span class="mr-3">🚪</span> 登出
+            </button>
+        </nav>
+    </aside>
+
+    <!-- 主內容 -->
+    <main class="ml-64 p-8">
+        <div class="mb-8">
+            <h2 class="text-3xl font-bold text-white">歡迎回來！</h2>
+            <p class="text-slate-400 mt-2">以下是網站的概況統計</p>
+        </div>
+
+        <!-- 統計卡片 -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="statsCards">
+            <div class="bg-slate-800 border border-white/10 rounded-xl p-6 hover:border-cyan-400/30 transition">
+                <div class="text-3xl mb-2">💼</div>
+                <p class="text-slate-400 text-sm">作品總數</p>
+                <p class="text-3xl font-bold text-cyan-400 mt-1" id="projectCount">-</p>
+            </div>
+            <div class="bg-slate-800 border border-white/10 rounded-xl p-6 hover:border-cyan-400/30 transition">
+                <div class="text-3xl mb-2">💬</div>
+                <p class="text-slate-400 text-sm">留言總數</p>
+                <p class="text-3xl font-bold text-violet-400 mt-1" id="messageCount">-</p>
+            </div>
+            <div class="bg-slate-800 border border-white/10 rounded-xl p-6 hover:border-cyan-400/30 transition">
+                <div class="text-3xl mb-2">📬</div>
+                <p class="text-slate-400 text-sm">未讀留言</p>
+                <p class="text-3xl font-bold text-red-400 mt-1" id="unreadCount">-</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script>
+        checkAuth();
+
+        async function loadStats() {
+            try {
+                const projects = await authFetch('/api/projects');
+                if (projects && projects.success) {
+                    document.getElementById('projectCount').textContent = projects.data.length;
+                }
+            } catch (e) {
+                document.getElementById('projectCount').textContent = '0';
+            }
+
+            try {
+                const stats = await authFetch('/api/messages/stats');
+                if (stats && stats.success) {
+                    document.getElementById('messageCount').textContent = stats.data.total;
+                    document.getElementById('unreadCount').textContent = stats.data.unread;
+                }
+            } catch (e) {
+                document.getElementById('messageCount').textContent = '0';
+                document.getElementById('unreadCount').textContent = '0';
+            }
+        }
+
+        loadStats();
+    </script>
+</body>
+</html>

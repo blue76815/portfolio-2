@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品管理 | 後台管理</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- Sidebar -->
+    <aside class="fixed left-0 top-0 w-64 h-full bg-slate-800 border-r border-white/10 z-40">
+        <div class="p-6">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">後台管理</h1>
+        </div>
+        <nav class="mt-4">
+            <a href="dashboard.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">📊</span> 儀表板
+            </a>
+            <a href="projects.html" class="flex items-center px-6 py-3 text-cyan-400 border-l-4 border-cyan-400 bg-white/5">
+                <span class="mr-3">💼</span> 作品管理
+            </a>
+            <a href="messages.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">💬</span> 留言管理
+            </a>
+            <a href="profile.html" class="flex items-center px-6 py-3 text-slate-300 hover:text-white hover:bg-white/5 border-l-4 border-transparent transition">
+                <span class="mr-3">👤</span> 個人資料
+            </a>
+            <button onclick="logout()" class="flex items-center px-6 py-3 text-slate-300 hover:text-red-400 hover:bg-white/5 border-l-4 border-transparent transition w-full text-left mt-8">
+                <span class="mr-3">🚪</span> 登出
+            </button>
+        </nav>
+    </aside>
+
+    <!-- 主內容 -->
+    <main class="ml-64 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-white">作品管理</h2>
+            <button onclick="openModal()" class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition">
+                + 新增作品
+            </button>
+        </div>
+
+        <!-- 作品表格 -->
+        <div class="bg-slate-800 border border-white/10 rounded-xl overflow-hidden">
+            <table class="w-full">
+                <thead class="bg-slate-700/50">
+                    <tr>
+                        <th class="text-left px-6 py-3 text-slate-300 text-sm font-medium">標題</th>
+                        <th class="text-left px-6 py-3 text-slate-300 text-sm font-medium">技術</th>
+                        <th class="text-left px-6 py-3 text-slate-300 text-sm font-medium">建立日期</th>
+                        <th class="text-right px-6 py-3 text-slate-300 text-sm font-medium">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="projectList">
+                    <tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">載入中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="projectModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center">
+        <div class="bg-slate-800 border border-white/10 rounded-xl p-8 w-full max-w-lg mx-4">
+            <h3 id="modalTitle" class="text-xl font-bold text-white mb-6">新增作品</h3>
+            <form id="projectForm" class="space-y-4">
+                <input type="hidden" id="projectId">
+                <div>
+                    <label class="block text-slate-300 text-sm mb-1">標題</label>
+                    <input type="text" id="pTitle" required class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition">
+                </div>
+                <div>
+                    <label class="block text-slate-300 text-sm mb-1">描述</label>
+                    <textarea id="pDesc" rows="3" class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition resize-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-slate-300 text-sm mb-1">技術標籤</label>
+                    <input type="text" id="pTech" class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition" placeholder="例：React, Node.js">
+                </div>
+                <div>
+                    <label class="block text-slate-300 text-sm mb-1">圖片 URL</label>
+                    <input type="text" id="pImage" class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-300 text-sm mb-1">Demo URL</label>
+                        <input type="text" id="pDemo" class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 text-sm mb-1">GitHub URL</label>
+                        <input type="text" id="pGithub" class="w-full px-4 py-2 bg-slate-700 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyan-400 transition">
+                    </div>
+                </div>
+                <div class="flex gap-3 pt-4">
+                    <button type="submit" class="flex-1 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition">
+                        儲存
+                    </button>
+                    <button type="button" onclick="closeModal()" class="flex-1 py-2 bg-slate-600 hover:bg-slate-500 text-white rounded-lg transition">
+                        取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        checkAuth();
+
+        let editingId = null;
+
+        async function loadProjects() {
+            try {
+                const res = await authFetch('/api/projects');
+                const list = document.getElementById('projectList');
+                if (res && res.success && res.data.length > 0) {
+                    list.innerHTML = res.data.map(p => `
+                        <tr class="border-t border-white/5 hover:bg-white/5 transition">
+                            <td class="px-6 py-4 text-white">${p.title}</td>
+                            <td class="px-6 py-4 text-slate-400 text-sm">${p.tech_stack}</td>
+                            <td class="px-6 py-4 text-slate-400 text-sm">${new Date(p.created_at).toLocaleDateString('zh-TW')}</td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="editProject(${p.id})" class="text-cyan-400 hover:text-cyan-300 text-sm mr-3 transition">編輯</button>
+                                <button onclick="deleteProject(${p.id})" class="text-red-400 hover:text-red-300 text-sm transition">刪除</button>
+                            </td>
+                        </tr>
+                    `).join('');
+                } else {
+                    list.innerHTML = '<tr><td colspan="4" class="px-6 py-8 text-center text-slate-500">尚無作品，點擊上方按鈕新增</td></tr>';
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        function openModal(project = null) {
+            document.getElementById('projectModal').classList.remove('hidden');
+            if (project) {
+                editingId = project.id;
+                document.getElementById('modalTitle').textContent = '編輯作品';
+                document.getElementById('projectId').value = project.id;
+                document.getElementById('pTitle').value = project.title;
+                document.getElementById('pDesc').value = project.description;
+                document.getElementById('pTech').value = project.tech_stack;
+                document.getElementById('pImage').value = project.image_url;
+                document.getElementById('pDemo').value = project.demo_url;
+                document.getElementById('pGithub').value = project.github_url;
+            } else {
+                editingId = null;
+                document.getElementById('modalTitle').textContent = '新增作品';
+                document.getElementById('projectForm').reset();
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            editingId = null;
+        }
+
+        async function editProject(id) {
+            try {
+                const res = await authFetch(`/api/projects/${id}`);
+                if (res && res.success) {
+                    openModal(res.data);
+                }
+            } catch (e) {
+                showToast('載入作品失敗', 'error');
+            }
+        }
+
+        async function deleteProject(id) {
+            if (!confirm('確定要刪除這個作品嗎？')) return;
+            try {
+                const res = await authFetch(`/api/projects/${id}`, { method: 'DELETE' });
+                if (res && res.success) {
+                    showToast('刪除成功');
+                    loadProjects();
+                } else {
+                    showToast(res.message || '刪除失敗', 'error');
+                }
+            } catch (e) {
+                showToast('刪除失敗', 'error');
+            }
+        }
+
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                title: document.getElementById('pTitle').value,
+                description: document.getElementById('pDesc').value,
+                tech_stack: document.getElementById('pTech').value,
+                image_url: document.getElementById('pImage').value,
+                demo_url: document.getElementById('pDemo').value,
+                github_url: document.getElementById('pGithub').value
+            };
+
+            try {
+                let res;
+                if (editingId) {
+                    res = await authFetch(`/api/projects/${editingId}`, {
+                        method: 'PUT',
+                        body: JSON.stringify(data)
+                    });
+                } else {
+                    res = await authFetch('/api/projects', {
+                        method: 'POST',
+                        body: JSON.stringify(data)
+                    });
+                }
+
+                if (res && res.success) {
+                    showToast(editingId ? '更新成功' : '新增成功');
+                    closeModal();
+                    loadProjects();
+                } else {
+                    showToast(res.message || '操作失敗', 'error');
+                }
+            } catch (e) {
+                showToast('操作失敗', 'error');
+            }
+        });
+
+        loadProjects();
+    </script>
+</body>
+</html>

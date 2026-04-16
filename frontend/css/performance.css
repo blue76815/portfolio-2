@@ -1,0 +1,41 @@
+/* GPU 加速與效能優化 */
+.glass-card,
+[class*="glass-card"] {
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* 無障礙設計：尊重使用者的減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-bg {
+        animation: none !important;
+    }
+}
+
+/* 圖片最佳化 */
+img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 觸控目標最小尺寸 */
+a, button {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* 滑順滾動 */
+html {
+    scroll-behavior: smooth;
+}

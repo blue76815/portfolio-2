@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聯絡我 | 個人履歷網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/performance.css">
+    <style>
+        .glass-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(34,211,238,0.3);
+            box-shadow: 0 0 20px rgba(34,211,238,0.15);
+            transform: translateY(-4px);
+        }
+        input:focus, textarea:focus {
+            box-shadow: 0 0 15px rgba(34,211,238,0.2);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- 導覽列 -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Portfolio</a>
+            <div class="hidden md:flex gap-6">
+                <a href="index.html" class="text-slate-300 hover:text-white transition">首頁</a>
+                <a href="projects.html" class="text-slate-300 hover:text-white transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-cyan-400 hover:text-cyan-300 transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-white text-2xl">☰</button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-800/95 backdrop-blur-lg border-t border-white/10">
+            <div class="flex flex-col px-4 py-4 gap-3">
+                <a href="index.html" class="text-slate-300 hover:text-white transition">首頁</a>
+                <a href="projects.html" class="text-slate-300 hover:text-white transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-cyan-400 hover:text-cyan-300 transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16 px-4 max-w-6xl mx-auto">
+        <section class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">聯絡我</h1>
+            <p class="text-slate-400 max-w-xl mx-auto">有任何問題或合作提案？歡迎填寫表單或透過以下方式聯繫我！</p>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 聯絡表單 -->
+            <section id="contactForm" class="lg:col-span-2">
+                <div class="glass-card p-8">
+                    <h2 class="text-2xl font-semibold text-white mb-6">傳送訊息</h2>
+                    <form id="messageForm" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-slate-300 text-sm mb-2">姓名</label>
+                            <input type="text" id="name" name="name" required
+                                class="w-full px-4 py-3 bg-slate-800 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all duration-300"
+                                placeholder="請輸入您的姓名">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-slate-300 text-sm mb-2">Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-3 bg-slate-800 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all duration-300"
+                                placeholder="請輸入您的 Email">
+                        </div>
+                        <div>
+                            <label for="content" class="block text-slate-300 text-sm mb-2">訊息內容</label>
+                            <textarea id="content" name="content" rows="5" required
+                                class="w-full px-4 py-3 bg-slate-800 border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition-all duration-300 resize-none"
+                                placeholder="請輸入您的訊息..."></textarea>
+                        </div>
+                        <button type="submit" id="submitBtn"
+                            class="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-semibold rounded-lg transition-all duration-300 hover:scale-[1.02]">
+                            送出訊息
+                        </button>
+                        <p id="formMessage" class="text-center text-sm hidden"></p>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 聯絡資訊 -->
+            <section id="contactInfo" class="space-y-6">
+                <div class="glass-card p-6">
+                    <div class="text-2xl mb-3">📧</div>
+                    <h3 class="text-lg font-semibold text-white mb-1">Email</h3>
+                    <p class="text-cyan-400">hello@example.com</p>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="text-2xl mb-3">🐙</div>
+                    <h3 class="text-lg font-semibold text-white mb-1">GitHub</h3>
+                    <a href="https://github.com" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition">github.com/myprofile</a>
+                </div>
+                <div class="glass-card p-6">
+                    <div class="text-2xl mb-3">💼</div>
+                    <h3 class="text-lg font-semibold text-white mb-1">LinkedIn</h3>
+                    <a href="https://linkedin.com" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition">linkedin.com/in/myprofile</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-400 text-sm">&copy; 2026 Portfolio. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">GitHub</a>
+                <a href="https://linkedin.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('section:first-of-type > *', {
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out'
+        });
+
+        gsap.from('#contactForm', {
+            y: 50, opacity: 0, duration: 0.8, ease: 'power2.out',
+            scrollTrigger: { trigger: '#contactForm', start: 'top 80%', toggleActions: 'play none none none' }
+        });
+
+        gsap.from('#contactInfo .glass-card', {
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.15, ease: 'power2.out',
+            scrollTrigger: { trigger: '#contactInfo', start: 'top 80%', toggleActions: 'play none none none' }
+        });
+
+        // 表單欄位 focus 發光效果
+        document.querySelectorAll('#messageForm input, #messageForm textarea').forEach(el => {
+            el.addEventListener('focus', () => {
+                gsap.to(el, { borderColor: 'rgba(34,211,238,1)', boxShadow: '0 0 15px rgba(34,211,238,0.3)', duration: 0.3 });
+            });
+            el.addEventListener('blur', () => {
+                gsap.to(el, { borderColor: 'rgba(255,255,255,0.1)', boxShadow: 'none', duration: 0.3 });
+            });
+        });
+
+        // 表單前端驗證與送出
+        const API_BASE = 'http://localhost:8000';
+        document.getElementById('messageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const msg = document.getElementById('formMessage');
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const content = document.getElementById('content').value.trim();
+
+            if (!name || !email || !content) {
+                msg.textContent = '請填寫所有欄位';
+                msg.className = 'text-center text-sm text-red-400';
+                msg.classList.remove('hidden');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = '送出中...';
+
+            try {
+                const res = await fetch(`${API_BASE}/api/messages`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, email, content })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    msg.textContent = '訊息已送出，感謝您的聯繫！';
+                    msg.className = 'text-center text-sm text-green-400';
+                    document.getElementById('messageForm').reset();
+                } else {
+                    msg.textContent = data.message || '送出失敗，請稍後再試';
+                    msg.className = 'text-center text-sm text-red-400';
+                }
+            } catch (err) {
+                msg.textContent = '網路錯誤，請確認後端服務已啟動';
+                msg.className = 'text-center text-sm text-red-400';
+            }
+            msg.classList.remove('hidden');
+            btn.disabled = false;
+            btn.textContent = '送出訊息';
+
+            // 送出按鈕彈性回彈動畫
+            gsap.fromTo(btn, { scale: 0.95 }, { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+        });
+    </script>
+</body>
+</html>

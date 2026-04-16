@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品集 | 個人履歷網站</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/performance.css">
+    <style>
+        .glass-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(34,211,238,0.3);
+            box-shadow: 0 0 20px rgba(34,211,238,0.15);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+    <!-- 導覽列 -->
+    <nav class="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">Portfolio</a>
+            <div class="hidden md:flex gap-6">
+                <a href="index.html" class="text-slate-300 hover:text-white transition">首頁</a>
+                <a href="projects.html" class="text-cyan-400 hover:text-cyan-300 transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-slate-300 hover:text-white transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-white text-2xl">☰</button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-slate-800/95 backdrop-blur-lg border-t border-white/10">
+            <div class="flex flex-col px-4 py-4 gap-3">
+                <a href="index.html" class="text-slate-300 hover:text-white transition">首頁</a>
+                <a href="projects.html" class="text-cyan-400 hover:text-cyan-300 transition">作品集</a>
+                <a href="about.html" class="text-slate-300 hover:text-white transition">關於我</a>
+                <a href="contact.html" class="text-slate-300 hover:text-white transition">聯絡我</a>
+                <a href="login.html" class="text-slate-300 hover:text-white transition">登入</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-16 px-4 max-w-6xl mx-auto">
+        <!-- 頁面標題 -->
+        <section class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">我的作品集</h1>
+            <p class="text-slate-400 max-w-xl mx-auto">這裡展示了我參與開發的專案，涵蓋前端、後端與全端作品。</p>
+        </section>
+
+        <!-- 作品卡片 Grid -->
+        <section id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <p class="text-slate-500 text-center col-span-full">載入中...</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-slate-400 text-sm">&copy; 2026 Portfolio. All rights reserved.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">GitHub</a>
+                <a href="https://linkedin.com" target="_blank" class="text-slate-400 hover:text-cyan-400 transition">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        document.getElementById('menuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('section:first-of-type > *', {
+            y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out'
+        });
+
+        const API_BASE = 'http://localhost:8000';
+        const icons = ['🌐', '📊', '📱', '🤖', '📝', '🎮'];
+
+        async function loadProjects() {
+            try {
+                const res = await fetch(`${API_BASE}/api/projects`);
+                const data = await res.json();
+                const container = document.getElementById('projectGrid');
+                if (data.success && data.data.length > 0) {
+                    container.innerHTML = data.data.map((p, i) => {
+                        const techs = p.tech_stack ? p.tech_stack.split(',').map(t => t.trim()) : [];
+                        return `
+                            <article class="glass-card p-6">
+                                <div class="w-full h-48 bg-slate-700 rounded-lg mb-4 flex items-center justify-center">
+                                    <span class="text-5xl">${icons[i % icons.length]}</span>
+                                </div>
+                                <h3 class="text-xl font-semibold text-white mb-2">${p.title}</h3>
+                                <p class="text-slate-400 text-sm mb-3">${p.description}</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    ${techs.map((t, j) => `<span class="text-xs px-2 py-1 ${j % 2 === 0 ? 'bg-cyan-400/10 text-cyan-400' : 'bg-violet-400/10 text-violet-400'} rounded">${t}</span>`).join('')}
+                                </div>
+                                <div class="flex gap-3">
+                                    ${p.demo_url ? `<a href="${p.demo_url}" target="_blank" class="text-sm text-cyan-400 hover:text-cyan-300 transition">Demo →</a>` : ''}
+                                    ${p.github_url ? `<a href="${p.github_url}" target="_blank" class="text-sm text-slate-400 hover:text-white transition">GitHub →</a>` : ''}
+                                </div>
+                            </article>
+                        `;
+                    }).join('');
+
+                    gsap.from('#projectGrid .glass-card', {
+                        y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out',
+                        scrollTrigger: { trigger: '#projectGrid', start: 'top 80%', toggleActions: 'play none none none' }
+                    });
+                } else {
+                    container.innerHTML = '<p class="text-slate-500 text-center col-span-full">尚無作品</p>';
+                }
+            } catch (err) {
+                console.error('載入作品失敗:', err);
+            }
+        }
+        loadProjects();
+    </script>
+</body>
+</html>
